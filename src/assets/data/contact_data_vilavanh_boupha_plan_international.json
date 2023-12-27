@@ -1,0 +1,44 @@
+{
+  "name": {
+    "firstName": "Vilavanh",
+    "surName": "Boupha",
+    "prefix": "Ms."
+  },
+  "phoneNumbers": [
+    {
+      "types": [
+        "WORK"
+      ],
+      "phoneNumber": "+856 21 353 408"
+    },
+    {
+      "types": [
+        "WORK",
+        "PREF"
+      ],
+      "phoneNumber": "+856 20 5516 2914"
+    }
+  ],
+  "addresses": [
+    {
+      "types": [
+        "WORK",
+        "PREF"
+      ],
+      "streetAddress": "House no. 203, Unit 10, Phonsinouan Village, Sisattanak District",
+      "city": "Vientiane Capital",
+      "countryName": "Lao PDR"
+    }
+  ],
+  "emails": [
+    {
+      "types": [
+        "INTERNET"
+      ],
+      "email": "vilavanh.boupha@plan-international.org"
+    }
+  ],
+  "organization": "Plan International Laos",
+  "title": "Grant Finance Manager",
+  "note": "Skype: bpemvp"
+}

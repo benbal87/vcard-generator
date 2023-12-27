@@ -1,0 +1,41 @@
+{
+  "name": {
+    "firstName": "A2Z Accounting"
+  },
+  "phoneNumbers": [
+    {
+      "types": [
+        "WORK",
+        "PREF"
+      ],
+      "phoneNumber": "+856 20 7899 6697"
+    },
+    {
+      "types": [
+        "WORK"
+      ],
+      "phoneNumber": "+856 20 5789 6354"
+    }
+  ],
+  "addresses": [
+    {
+      "types": [
+        "WORK",
+        "PREF"
+      ],
+      "streetAddress": "Thongsangnang Village, Chanthabouly District",
+      "city": "Vientiane Capital",
+      "countryName": "Lao PDR"
+    }
+  ],
+  "emails": [
+    {
+      "types": [
+        "INTERNET"
+      ],
+      "email": "info@a2zaccountinglao.com"
+    }
+  ],
+  "organization": "ບໍລິສັດ ເອທູຊີ ບໍລິການບັນຊີ ຈໍາກັດ / A2Z Accounting Service Co., Ltd.",
+  "webpage": "www.a2zaccountinglao.com"
+}
