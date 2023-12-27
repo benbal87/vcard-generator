@@ -1,3 +1,4 @@
+import vCard from 'vcf'
 import VCardType3AddressEnum from '../enums/v-card-type3-address-types.enum'
 
 interface VCardType3AddressModelProps {
@@ -12,6 +13,7 @@ interface VCardType3AddressModelProps {
 }
 
 class VCardType3AddressModel {
+  static readonly TYPE: string = 'adr'
   private _types: VCardType3AddressEnum[]
   private _postOfficeBox?: string
   private _extendedAddress?: string
@@ -30,6 +32,86 @@ class VCardType3AddressModel {
     this._state = args.state
     this._postalCode = args.postalCode
     this._countryName = args.countryName
+  }
+
+  get vcardProperty(): vCard.Property {
+    return new vCard.Property(
+      VCardType3AddressModel.TYPE,
+      [
+        this.postOfficeBox,
+        this.extendedAddress,
+        this.streetAddress,
+        this.city,
+        this.state,
+        this.postalCode,
+        this.countryName
+      ].join(';'),
+      { type: this.types }
+    )
+  }
+
+  get types(): VCardType3AddressEnum[] {
+    return this._types
+  }
+
+  set types(value: VCardType3AddressEnum[]) {
+    this._types = value
+  }
+
+  get postOfficeBox(): string {
+    return this._postOfficeBox ?? ''
+  }
+
+  set postOfficeBox(value: string) {
+    this._postOfficeBox = value
+  }
+
+  get extendedAddress(): string {
+    return this._extendedAddress ?? ''
+  }
+
+  set extendedAddress(value: string) {
+    this._extendedAddress = value
+  }
+
+  get streetAddress(): string {
+    return this._streetAddress
+  }
+
+  set streetAddress(value: string) {
+    this._streetAddress = value
+  }
+
+  get city(): string {
+    return this._city
+  }
+
+  set city(value: string) {
+    this._city = value
+  }
+
+  get state(): string {
+    return this._state ?? ''
+  }
+
+  set state(value: string) {
+    this._state = value
+  }
+
+  get postalCode(): string {
+    return this._postalCode ?? ''
+  }
+
+  set postalCode(value: string) {
+    this._postalCode = value
+  }
+
+  get countryName(): string {
+    return this._countryName
+  }
+
+  set countryName(value: string) {
+    this._countryName = value
   }
 }
 

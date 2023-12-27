@@ -1,4 +1,6 @@
+import vCard from 'vcf'
 import { isArrayNotEmpty } from '../utils/array.util'
+import { isStringNotEmpty } from '../utils/string.util'
 import VCardType3EmailModel, {
   VCardType3EmailModelProps
 } from './v-card-type-3-email.model'
@@ -16,7 +18,7 @@ interface VCardType3ModelProps {
   name: VCardType3NameModel
   formattedName?: string
   nickName?: string
-  phoneNumbers: VCardType3PhoneModel[]
+  phoneNumbers?: VCardType3PhoneModel[]
   addresses?: VCardType3AddressModel[]
   emails?: VCardType3EmailModel[]
   organization?: string
@@ -26,6 +28,11 @@ interface VCardType3ModelProps {
 }
 
 class VCardType3Model {
+  static readonly TYPE_NICKNAME: string = 'nickname'
+  static readonly TYPE_ORG: string = 'org'
+  static readonly TYPE_TITLE: string = 'title'
+  static readonly TYPE_URL: string = 'url'
+  static readonly TYPE_NOTE: string = 'note'
   private _name: VCardType3NameModel
   private _formattedName?: string
   private _nickName?: string
@@ -55,6 +62,76 @@ class VCardType3Model {
     this._title = args.title
     this._webpage = args.webpage
     this._note = args.note
+  }
+
+  get vcard(): string {
+    const getVCardPropArray = (
+      arr: Array<VCardType3PhoneModel | VCardType3AddressModel | VCardType3EmailModel> | undefined
+    ): Array<vCard.Property> => isArrayNotEmpty(arr)
+      ? arr.map(p => p.vcardProperty)
+      : []
+
+    const getVCardProperty = (
+      fieldType: string,
+      fieldValue?: string
+    ): vCard.Property | undefined =>
+      isStringNotEmpty(fieldValue)
+        ? new vCard.Property(fieldType, fieldValue)
+        : undefined
+
+    const getVCardWithProps = (...properties: Array<vCard.Property | undefined>): vCard => {
+      const vcf: vCard = new vCard()
+      vcf.version = '3.0'
+      for (let arg of properties) {
+        if (arg) {
+          vcf.addProperty(arg)
+        }
+      }
+      return vcf
+    }
+
+    const name: vCard.Property = this._name.vcardProperty
+    const formattedName: vCard.Property = this._name.formattedNameVCardProperty
+    const phoneNumbers: Array<vCard.Property> = getVCardPropArray(
+      this._phoneNumbers)
+    const addresses: Array<vCard.Property> = getVCardPropArray(this._addresses)
+    const emails: Array<vCard.Property> = getVCardPropArray(this._emails)
+
+    const nickName: vCard.Property | undefined = getVCardProperty(
+      VCardType3Model.TYPE_NICKNAME,
+      this.nickName
+    )
+    const organization: vCard.Property | undefined = getVCardProperty(
+      VCardType3Model.TYPE_ORG,
+      this.organization
+    )
+    const title: vCard.Property | undefined = getVCardProperty(
+      VCardType3Model.TYPE_TITLE,
+      this.title
+    )
+    const webpage: vCard.Property | undefined = getVCardProperty(
+      VCardType3Model.TYPE_URL,
+      this.webpage
+    )
+    const note: vCard.Property | undefined = getVCardProperty(
+      VCardType3Model.TYPE_NOTE,
+      this.note
+    )
+
+    const vcf: vCard = getVCardWithProps(
+      name,
+      formattedName,
+      ...phoneNumbers,
+      ...addresses,
+      ...emails,
+      nickName,
+      organization,
+      title,
+      webpage,
+      note,
+    )
+
+    return vcf.toString()
   }
 
   get name(): VCardType3NameModel {
