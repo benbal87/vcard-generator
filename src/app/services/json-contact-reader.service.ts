@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { catchError, map, Observable, tap, throwError } from 'rxjs'
+import { catchError, map, Observable, throwError } from 'rxjs'
 import { z } from 'zod'
 import VCardType3AddressEnum from '../enums/v-card-type3-address-types.enum'
 import VCardType3EmailEnum from '../enums/v-card-type3-email.enum'
@@ -13,6 +13,8 @@ import VCardType3Model, {
   providedIn: 'root'
 })
 export class JsonContactReaderService {
+
+  vCardType3ModelClassValidator = z.instanceof(VCardType3Model)
 
   vCardType3ModelValidator = z.object({
     name: z.object({
@@ -51,22 +53,21 @@ export class JsonContactReaderService {
   constructor(private http: HttpClient) {
   }
 
-  readContact(fileUrl: string): Observable<any> {
-    return this.http.get<any>(fileUrl)
+  readContact(fileUrl: string): Observable<VCardType3Model> {
+    return this.http.get<VCardType3Model>(fileUrl)
       .pipe(
         map((json: object) => {
-          const validationResult = this.vCardType3ModelValidator.parse(json)
-          console.group('RXJS MAP FUNCTION')
-          console.log('validation result', validationResult)
+          const rawObjectValidationResult = this.vCardType3ModelValidator.parse(json)
+          console.log('raw VCardType3Model object validation result', rawObjectValidationResult)
           const conv: VCardType3Model = new VCardType3Model(json as unknown as VCardType3ModelProps)
-          console.log('converted VCardType3Model', conv)
-          console.groupEnd()
+          const vcardType3ModelClassValidationResult =  this.vCardType3ModelClassValidator.parse(conv)
+          console.log('VCardType3Model class validation result', vcardType3ModelClassValidationResult)
           return conv
         }),
         catchError(e => throwError(() => e)),
-        tap(r => {
-          console.log('tap', r)
-        })
+        // tap(r => {
+        //   console.log('tap', r)
+        // })
       )
   }
 }
