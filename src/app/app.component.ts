@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms'
 import { RouterOutlet } from '@angular/router'
 
 import vCard from 'vcf'
-import VCardType3Model from './models/v-card-type3.model'
 import {
   JsonContactReaderService
 } from './services/json-contact-reader.service'
@@ -52,7 +51,12 @@ export class AppComponent {
       .subscribe({
         next: r => {
           console.log('subscribe', r)
-          console.log('subscribe address #0', r.addresses[0])
+          // console.log('subscribe address #0', r.addresses[0])
+
+          // console.log('note', conv.note)
+
+          // const conv = new VCardType3Model(r as unknown as
+          // VCardType3ModelProps) console.log(conv)
         },
         error: error => {
           console.log('error', error)
