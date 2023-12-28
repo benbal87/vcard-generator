@@ -16,6 +16,7 @@ import VCardType3PhoneModel, {
 } from './v-card-type3-phone.model'
 
 interface VCardType3ModelProps {
+  photoBase64?: string
   name: VCardType3NameModel
   formattedName?: string
   nickName?: string
@@ -29,6 +30,7 @@ interface VCardType3ModelProps {
 }
 
 class VCardType3Model {
+  private _photoBase64?: string
   private _name: VCardType3NameModel
   private _formattedName?: string
   private _nickName?: string
@@ -41,6 +43,7 @@ class VCardType3Model {
   private _note?: string
 
   constructor(args: VCardType3ModelProps) {
+    this._photoBase64 = args.photoBase64
     this._name
       = new VCardType3NameModel(args.name as unknown as VCardType3NameModelProps)
     this._formattedName = args.formattedName
@@ -128,6 +131,14 @@ class VCardType3Model {
     )
 
     return vcf.toString()
+  }
+
+  get photoBase64(): string | undefined {
+    return this._photoBase64
+  }
+
+  set photoBase64(value: string) {
+    this._photoBase64 = value
   }
 
   get name(): VCardType3NameModel {

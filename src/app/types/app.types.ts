@@ -1,3 +1,7 @@
+import VCardType3AddressEnum from '../enums/v-card-type3-address-types.enum'
+import VCardType3EmailEnum from '../enums/v-card-type3-email.enum'
+import VCardType3PhoneEnum from '../enums/v-card-type3-phone.enum'
+
 export type PartialK<T, K extends PropertyKey = PropertyKey> = Partial<
   Pick<T, Extract<keyof T, K>>
 > &
@@ -24,16 +28,37 @@ export type NonEmptyArray<T> = [T, ...T[]]
 
 export type NonEmpty2dArray<T> = [T, ...T[]][]
 
-export enum DateFormats {
-  ISO_8601_DATE = 'YYYY-MM-DD',
-  ISO_8601_DATE_WITH_SLASHES = 'YYYY/MM/DD',
-  ISO_8601_DATE_TIME = 'YYYY-MM-DD HH:mm:ss',
-  UK_DATE = 'DD/MM/YYYY',
-  UK_DATE_TIME = 'DD/MM/YYYY HH:mm:ss',
-  USA_DATE = 'MM/DD/YYYY',
-  USA_DATE_TIME = 'MM/DD/YYYY HH:mm:ss',
-  SHORT_DATE = 'MMM D, YY',
-  SHORT_DATE_TIME = 'MMM D, YY HH:mm:ss',
-  LONG_DATE = 'MMMM DD, YYYY',
-  LONG_DATE_TIME = 'MMMM DD, YYYY - HH:mm:ss'
+export interface ContactJsonType {
+  photoUrl?: string
+  name: {
+    surname?: string // #1
+    firstName: string // #2
+    middleName?: string // #3
+    prefix?: string // #4
+    suffix?: string // #5
+  }
+  formattedName?: string
+  nickName?: string
+  phoneNumbers?: {
+    types: VCardType3PhoneEnum[]
+    phoneNumber: string
+  }[]
+  addresses?: {
+    types: VCardType3AddressEnum[]
+    postOfficeBox?: string // 1. the post office box
+    extendedAddress?: string // 2. the extended address
+    streetAddress: string // 3. the street address
+    city: string // 4. the locality (e.g., city)
+    state?: string // 5. the region (e.g., state or province)
+    postalCode?: string // 6. the postal code
+    countryName: string // 7. the country name
+  }[]
+  emails?: {
+    types: VCardType3EmailEnum[]
+    email: string
+  }[]
+  organization?: string
+  title?: string
+  webpage?: string
+  note?: string
 }

@@ -3,6 +3,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common'
 import { AfterViewInit, Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RouterOutlet } from '@angular/router'
+import { Subscription } from 'rxjs'
 import {
   JsonContactReaderService
 } from './services/json-contact-reader.service'
@@ -21,6 +22,7 @@ import {
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements AfterViewInit {
+  subs = new Subscription()
   textToBeEncoded: string = ''
   textToBeDecoded: string = ''
   encodedText: string = ''
@@ -82,12 +84,14 @@ export class AppComponent implements AfterViewInit {
   }
 
   setVCardTest() {
-    this.jsonContactReaderService.readContact(
+    this.subs = this.jsonContactReaderService.getContactData(
         'assets/data/contact_data_a2z_company.json')
       .subscribe({
         next: r => {
-          console.log('subscribe', r)
+          // console.log('app.component.ts => subscribe => VCardType3Model =>', r)
+          console.log('app.component.ts => subscribe => VCardType3Model.photoBase64 =>', r.photoBase64?.substring(1, 50))
           this.vcardTestString = r.vcard
+          // this.subs.unsubscribe()
         },
         error: error => {
           console.log('error', error)
