@@ -4,9 +4,10 @@ import {
   BehaviorSubject,
   catchError,
   combineLatestWith,
+  finalize,
   map,
   Observable,
-  Subscription, takeLast,
+  Subscription,
   throwError
 } from 'rxjs'
 import { z } from 'zod'
@@ -18,13 +19,15 @@ import VCardType3Model, {
 } from '../models/v-card-type3.model'
 import { ContactJsonType } from '../types/app.types'
 import { filterObjectKeysByList } from '../utils/object.util'
+import { isStringNotEmpty } from '../utils/string.util'
 
 @Injectable({
   providedIn: 'root'
 })
 export class JsonContactReaderService {
-  private photoSubscription$ = new Subscription()
-  private photoBase64Subject$ = new BehaviorSubject<string>('')
+  private photoSubscription$!: Subscription
+  private photoBase64Subject$ =
+    new BehaviorSubject<string | undefined>(undefined)
 
   vCardType3ModelClassValidator = z.instanceof(VCardType3Model)
 
@@ -65,18 +68,71 @@ export class JsonContactReaderService {
   constructor(private http: HttpClient) {
   }
 
-  getContactData(fileUrl: string): Observable<VCardType3Model> {
+  /*
+  * The logic of this function is a little fuzzy now.
+  * The starting problem was that I wanted to store only the photo url in the
+  * contact data jsons. Because of this, right after the contact data json
+  * has been parsed, first I need to get the photo file and second I need to
+  * read it, and convert it to a more usable base64 string format.
+  * The main problem is with the _readPhotoToBinary function where I am using
+  * the readAsDataURL function of the FileReader class, which is async and you
+  * have to provide a callback function for the "onload" property which will be
+  * called when the file read is ready.
+  * I was not able to make it in another way so far, so I just made a class
+  * instance subject, called "photoBase64Subject$" and put a next call in the
+  * onload callback.
+  *
+  * So first I have to call the _readContact function which reads the contact
+  * data json and then inside that function if there is an actual photo url in
+  * the contact data json (because it is optional) I am calling the
+  * _readPhotoToBinary to get the base64 of the photo.
+  *
+  * Else if there is no photo url in the contact data json, I will just call the
+  * next function on the photoBase64Subject$ with an empty string.
+  *
+  * In the getContactData function I am combining the _readContact with the
+  * photoBase64Subject$ next call. It was important for me, because I wanted to
+  * provide the base64 encoding of the photo in the VCardType3Model class
+  * instance in the getContactData function return.
+  *
+  * In the RXJS map function if the incoming photoBase64 string is actually
+  * undefined, that means that the actual base64 string value of the photo has
+  * not been sent yet, because if there is no photo in the contact data json,
+  * the next function will be called immediately on the photoBase64Subject$
+  * with an empty string.
+  * So if the photoBase64 is undefined, it means there will be a photo later,
+  * so I just want to return with an undefined value in that first round until
+  * the photo base64 string arrives, and I can set it to the photoBase64
+  * property of the VCardType3Model class instance.
+  * But if it is an empty string, it means the photo is nonexistent, so I can
+  * just return the VCardType3Model class instance without any problem.
+  *
+  * But why was all of this important?
+  * Because otherwise at the subscription side of the getContactData function
+  * nobody would be able to know if the received VCardType3Model is the final
+  * or just the first iteration because the photo has not been read in yet.
+  * This is also important for knowing when to call the unsubscribe function so
+  * the finalize function here will be able to run. And that is important,
+  * because in it there is an unsubscribe call of the photoSubscription$.
+  *
+  * Maybe it could have been solved more easily with the proper use of RXJS.
+  * TODO: Refactor this service class to be more unambiguous.
+  * */
+  getContactData(fileUrl: string): Observable<VCardType3Model | undefined> {
     return this._readContact(fileUrl).pipe(
-      takeLast(1),
       combineLatestWith(this.photoBase64Subject$),
-      map(([vCardModel, photoBase64 = '']: [VCardType3Model, string]) => {
-        vCardModel.photoBase64 = photoBase64
+      map(([vCardModel, photoBase64]: [VCardType3Model, string | undefined]) => {
+        if (photoBase64 === undefined) {
+          return undefined
+        }
+        if (isStringNotEmpty(photoBase64)) {
+          vCardModel.photoBase64 = photoBase64
+        }
         return vCardModel
       }),
-      // finalize(() => {
-      //   console.log('### unsubscribe')
-      //   this.photoSubscription$.unsubscribe()
-      // })
+      finalize(() => {
+        this.photoSubscription$.unsubscribe()
+      })
     )
   }
 
@@ -84,12 +140,7 @@ export class JsonContactReaderService {
     return this.http.get<VCardType3Model>(fileUrl)
       .pipe(
         map((json: ContactJsonType) => {
-          // const contactDataJsonValidationResult =
           this.contactDataJsonValidator.parse(json)
-          // console.log(
-          //   'contact data json object validation result',
-          //   contactDataJsonValidationResult
-          // )
 
           const jsonConverted: VCardType3ModelProps =
             filterObjectKeysByList(
@@ -98,18 +149,14 @@ export class JsonContactReaderService {
             ) as unknown as VCardType3ModelProps
           const conv: VCardType3Model = new VCardType3Model(jsonConverted)
 
-          // const vcardType3ModelClassValidationResult =
-            this.vCardType3ModelClassValidator.parse(conv)
-          // console.log(
-          //   'VCardType3Model class validation result',
-          //   vcardType3ModelClassValidationResult
-          // )
+          this.vCardType3ModelClassValidator.parse(conv)
 
           const photoUrl: string | undefined = json.photoUrl
           if (photoUrl) {
-            // console.log('photoUrl EXISTS')
             this.photoSubscription$ = this._readPhotoToBinary(photoUrl)
               .subscribe()
+          } else {
+            this.photoBase64Subject$.next('')
           }
 
           return conv

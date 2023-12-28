@@ -4,6 +4,7 @@ import { AfterViewInit, Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RouterOutlet } from '@angular/router'
 import { Subscription } from 'rxjs'
+import VCardType3Model from './models/v-card-type3.model'
 import {
   JsonContactReaderService
 } from './services/json-contact-reader.service'
@@ -87,12 +88,21 @@ export class AppComponent implements AfterViewInit {
     this.subs = this.jsonContactReaderService.getContactData(
         'assets/data/contact_data_a2z_company.json')
       .subscribe({
-        next: r => {
-          // console.log('app.component.ts => subscribe => VCardType3Model =>', r)
-          console.log('app.component.ts => subscribe => VCardType3Model.photoBase64 =>', r.photoBase64?.substring(1, 50))
-          this.vcardTestString = r.vcard
-          // this.subs.unsubscribe()
+        next: (r: VCardType3Model | undefined) => {
+          if (r) {
+            // console.log('app.component.ts => subscribe => VCardType3Model =>', r)
+            console.log(
+              'app.component.ts => subscribe => VCardType3Model.photoBase64 =>',
+              `"${r?.photoBase64?.substring(1, 50)}"`
+            )
+            this.vcardTestString = r.vcard
+            this.subs.unsubscribe()
+          }
         },
+        // complete: () => {
+        //   console.log('### complete')
+        //   // this.subs.unsubscribe()
+        // },
         error: error => {
           console.log('error', error)
         }
