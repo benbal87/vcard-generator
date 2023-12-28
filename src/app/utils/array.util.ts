@@ -1,10 +1,5 @@
 import { NonEmpty2dArray, NonEmptyArray } from '../types/app.types'
-import {
-  isFunction,
-  isNil,
-  isNumber,
-  isZero
-} from './type.util'
+import { isFunction, isNil, isNumber, isZero } from './type.util'
 
 export const isArrayNotEmpty = (arg: any): arg is NonEmptyArray<typeof arg> =>
   Array.isArray(arg) && arg?.length > 0

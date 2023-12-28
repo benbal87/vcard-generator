@@ -45,11 +45,19 @@
 
     <div class="textarea-wrapper">
       <label for="vCardUrl">vCard QR Code Url:</label>
-      <textarea id="vCardUrl" [value]="getVcardQrCodeUrl(vCardRaw.value)"></textarea>
+      <textarea
+        id="vCardUrl"
+        [value]="getVcardQrCodeUrl(vCardRaw.value)"
+      ></textarea>
       <button>Copy to Clipboard</button>
     </div>
 
-    <img [ngSrc]="getVcardQrCodeUrl(vCardRaw.value)" width="500" height="500" alt="QR Code">
+    <img
+      [ngSrc]="getVcardQrCodeUrl(vCardRaw.value)"
+      width="500"
+      height="500"
+      alt="QR Code"
+    >
   </div>
 
 </div>

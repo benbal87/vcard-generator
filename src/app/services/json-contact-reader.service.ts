@@ -57,14 +57,22 @@ export class JsonContactReaderService {
     return this.http.get<VCardType3Model>(fileUrl)
       .pipe(
         map((json: object) => {
-          const rawObjectValidationResult = this.vCardType3ModelValidator.parse(json)
-          console.log('raw VCardType3Model object validation result', rawObjectValidationResult)
+          const rawObjectValidationResult = this.vCardType3ModelValidator.parse(
+            json)
+          console.log(
+            'raw VCardType3Model object validation result',
+            rawObjectValidationResult
+          )
           const conv: VCardType3Model = new VCardType3Model(json as unknown as VCardType3ModelProps)
-          const vcardType3ModelClassValidationResult =  this.vCardType3ModelClassValidator.parse(conv)
-          console.log('VCardType3Model class validation result', vcardType3ModelClassValidationResult)
+          const vcardType3ModelClassValidationResult = this.vCardType3ModelClassValidator.parse(
+            conv)
+          console.log(
+            'VCardType3Model class validation result',
+            vcardType3ModelClassValidationResult
+          )
           return conv
         }),
-        catchError(e => throwError(() => e)),
+        catchError(e => throwError(() => e))
         // tap(r => {
         //   console.log('tap', r)
         // })

@@ -53,7 +53,6 @@ export const isMap = (arg: any): arg is Map<any, any> =>
   typeof arg === 'object' &&
   Object.getPrototypeOf(arg) === Map.prototype
 
-
 export const isValidEnum = <T>(
   enumValue: any,
   enumObj: object

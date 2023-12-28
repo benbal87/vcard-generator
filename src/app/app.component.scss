@@ -1,70 +1,70 @@
 div.container {
-    border: 1px solid red;
-    padding: 3rem;
+  border: 1px solid red;
+  padding: 3rem;
 
-    & > * {
+  & > * {
+    display: block;
+
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
+  }
+
+  div.vcf-content-raw {
+    border: 2px solid darkmagenta;
+    border-radius: 1rem;
+    padding: 2rem;
+    white-space: pre-line;
+    line-height: 1.5rem;
+    width: fit-content;
+
+    textarea {
+      width: 50rem;
+      height: 20rem;
+      line-height: 1.2rem;
+      font-size: 1rem;
+    }
+
+    button {
+      margin-top: 2rem;
+      display: block;
+    }
+  }
+
+  div.block {
+    width: fit-content;
+    border: 2px solid darkmagenta;
+    border-radius: 1rem;
+    padding: 2rem;
+
+    & > :not(:last-child) {
+      margin-bottom: 2rem;
+    }
+
+    input[type=text] {
+      width: 50rem;
+      line-height: 2rem;
+      padding: 0.25rem;
+    }
+
+    div.textarea-wrapper {
+      label {
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+
+      textarea {
         display: block;
+        width: 50rem;
+        height: 20rem;
+        margin-top: 0.5rem;
+        //white-space: pre-line;
+      }
 
-        &:not(:last-child) {
-            margin-bottom: 2rem;
-        }
+      button {
+        margin-top: 0.5rem;
+        cursor: pointer;
+      }
     }
-
-    div.vcf-content-raw {
-        border: 2px solid darkmagenta;
-        border-radius: 1rem;
-        padding: 2rem;
-        white-space: pre-line;
-        line-height: 1.5rem;
-        width: fit-content;
-
-        textarea {
-            width: 50rem;
-            height: 20rem;
-            line-height: 1.2rem;
-            font-size: 1rem;
-        }
-
-        button {
-            margin-top: 2rem;
-            display: block;
-        }
-    }
-
-    div.block {
-        width: fit-content;
-        border: 2px solid darkmagenta;
-        border-radius: 1rem;
-        padding: 2rem;
-
-        & > :not(:last-child) {
-            margin-bottom: 2rem;
-        }
-
-        input[type=text] {
-            width: 50rem;
-            line-height: 2rem;
-            padding: 0.25rem;
-        }
-
-        div.textarea-wrapper {
-            label {
-                text-transform: uppercase;
-                font-weight: bold;
-            }
-
-            textarea {
-                display: block;
-                width: 50rem;
-                height: 20rem;
-                margin-top: 0.5rem;
-                //white-space: pre-line;
-            }
-
-            button {
-                margin-top: 0.5rem;
-                cursor: pointer;
-            }
-        }
-    }
+  }
 }
