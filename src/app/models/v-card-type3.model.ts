@@ -1,4 +1,5 @@
 import vCard from 'vcf'
+import VCardType3KeysEnum from '../enums/v-card-type3-keys.enum'
 import { isArrayNotEmpty } from '../utils/array.util'
 import { isStringNotEmpty } from '../utils/string.util'
 import VCardType3EmailModel, {
@@ -28,11 +29,6 @@ interface VCardType3ModelProps {
 }
 
 class VCardType3Model {
-  static readonly TYPE_NICKNAME: string = 'nickname'
-  static readonly TYPE_ORG: string = 'org'
-  static readonly TYPE_TITLE: string = 'title'
-  static readonly TYPE_URL: string = 'url'
-  static readonly TYPE_NOTE: string = 'note'
   private _name: VCardType3NameModel
   private _formattedName?: string
   private _nickName?: string
@@ -98,23 +94,23 @@ class VCardType3Model {
     const emails: Array<vCard.Property> = getVCardPropArray(this._emails)
 
     const nickName: vCard.Property | undefined = getVCardProperty(
-      VCardType3Model.TYPE_NICKNAME,
+      VCardType3KeysEnum.NICKNAME,
       this.nickName
     )
     const organization: vCard.Property | undefined = getVCardProperty(
-      VCardType3Model.TYPE_ORG,
+      VCardType3KeysEnum.ORG,
       this.organization
     )
     const title: vCard.Property | undefined = getVCardProperty(
-      VCardType3Model.TYPE_TITLE,
+      VCardType3KeysEnum.TITLE,
       this.title
     )
     const webpage: vCard.Property | undefined = getVCardProperty(
-      VCardType3Model.TYPE_URL,
+      VCardType3KeysEnum.URL,
       this.webpage
     )
     const note: vCard.Property | undefined = getVCardProperty(
-      VCardType3Model.TYPE_NOTE,
+      VCardType3KeysEnum.NOTE,
       this.note
     )
 
@@ -128,7 +124,7 @@ class VCardType3Model {
       organization,
       title,
       webpage,
-      note,
+      note
     )
 
     return vcf.toString()

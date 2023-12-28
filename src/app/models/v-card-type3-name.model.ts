@@ -1,4 +1,5 @@
 import vCard from 'vcf'
+import VCardType3KeysEnum from '../enums/v-card-type3-keys.enum'
 
 interface VCardType3NameModelProps {
   surname?: string // #1
@@ -9,8 +10,6 @@ interface VCardType3NameModelProps {
 }
 
 class VCardType3NameModel {
-  static readonly TYPE: string = 'n'
-  static readonly TYPE_FORMATTED_NAME: string = 'fn'
   private _surname?: string
   private _firstName: string
   private _middleName?: string
@@ -27,7 +26,7 @@ class VCardType3NameModel {
 
   get vcardProperty(): vCard.Property {
     return new vCard.Property(
-      VCardType3NameModel.TYPE,
+      VCardType3KeysEnum.NAME,
       [
         this.surname,
         this.firstName,
@@ -40,7 +39,7 @@ class VCardType3NameModel {
 
   get formattedNameVCardProperty(): vCard.Property {
     return new vCard.Property(
-      VCardType3NameModel.TYPE_FORMATTED_NAME,
+      VCardType3KeysEnum.FORMATTED_NAME,
       this.formattedName
     )
   }

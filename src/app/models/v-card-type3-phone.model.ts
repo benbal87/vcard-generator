@@ -1,4 +1,5 @@
 import vCard from 'vcf'
+import VCardType3KeysEnum from '../enums/v-card-type3-keys.enum'
 import VCardType3PhoneEnum from '../enums/v-card-type3-phone.enum'
 
 interface VCardType3PhoneModelProps {
@@ -7,7 +8,6 @@ interface VCardType3PhoneModelProps {
 }
 
 class VCardType3PhoneModel {
-  static readonly TYPE: string = 'tel'
   private _types: VCardType3PhoneEnum[]
   private _phoneNumber: string
 
@@ -18,7 +18,7 @@ class VCardType3PhoneModel {
 
   get vcardProperty(): vCard.Property {
     return new vCard.Property(
-      VCardType3PhoneModel.TYPE,
+      VCardType3KeysEnum.PHONE,
       this.phoneNumber,
       { type: this.types }
     )

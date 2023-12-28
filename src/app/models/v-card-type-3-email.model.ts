@@ -1,5 +1,6 @@
 import vCard from 'vcf'
 import VCardType3EmailEnum from '../enums/v-card-type3-email.enum'
+import VCardType3KeysEnum from '../enums/v-card-type3-keys.enum'
 
 interface VCardType3EmailModelProps {
   types: VCardType3EmailEnum[]
@@ -7,7 +8,6 @@ interface VCardType3EmailModelProps {
 }
 
 class VCardType3EmailModel {
-  static readonly TYPE: string = 'email'
   private _types: VCardType3EmailEnum[]
   private _email: string
 
@@ -16,10 +16,9 @@ class VCardType3EmailModel {
     this._email = args.email
   }
 
-
   get vcardProperty(): vCard.Property {
     return new vCard.Property(
-      VCardType3EmailModel.TYPE,
+      VCardType3KeysEnum.EMAIL,
       this.email,
       { type: this.types }
     )

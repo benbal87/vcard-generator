@@ -1,5 +1,6 @@
 import vCard from 'vcf'
 import VCardType3AddressEnum from '../enums/v-card-type3-address-types.enum'
+import VCardType3KeysEnum from '../enums/v-card-type3-keys.enum'
 
 interface VCardType3AddressModelProps {
   types: VCardType3AddressEnum[]
@@ -13,7 +14,6 @@ interface VCardType3AddressModelProps {
 }
 
 class VCardType3AddressModel {
-  static readonly TYPE: string = 'adr'
   private _types: VCardType3AddressEnum[]
   private _postOfficeBox?: string
   private _extendedAddress?: string
@@ -36,7 +36,7 @@ class VCardType3AddressModel {
 
   get vcardProperty(): vCard.Property {
     return new vCard.Property(
-      VCardType3AddressModel.TYPE,
+      VCardType3KeysEnum.ADDRESS,
       [
         this.postOfficeBox,
         this.extendedAddress,
