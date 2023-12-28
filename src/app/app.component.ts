@@ -88,16 +88,13 @@ export class AppComponent implements AfterViewInit {
     this.subs = this.jsonContactReaderService.getContactData(
         'assets/data/contact_data_a2z_company.json')
       .subscribe({
-        next: (r: VCardType3Model | undefined) => {
-          if (r) {
-            // console.log('app.component.ts => subscribe => VCardType3Model =>', r)
-            console.log(
-              'app.component.ts => subscribe => VCardType3Model.photoBase64 =>',
-              `"${r?.photoBase64?.substring(1, 50)}"`
-            )
-            this.vcardTestString = r.vcard
-            this.subs.unsubscribe()
-          }
+        next: (r: VCardType3Model) => {
+          console.log(
+            'app.component.ts => subscribe => VCardType3Model.photoBase64 =>',
+            `"${r?.photoBase64?.substring(1, 50)}"`
+          )
+          this.vcardTestString = r.vcard
+          this.subs.unsubscribe()
         },
         // complete: () => {
         //   console.log('### complete')

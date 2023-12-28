@@ -7,6 +7,7 @@ import {
   finalize,
   map,
   Observable,
+  skipWhile,
   Subscription,
   throwError
 } from 'rxjs'
@@ -101,9 +102,9 @@ export class JsonContactReaderService {
   * the next function will be called immediately on the photoBase64Subject$
   * with an empty string.
   * So if the photoBase64 is undefined, it means there will be a photo later,
-  * so I just want to return with an undefined value in that first round until
-  * the photo base64 string arrives, and I can set it to the photoBase64
-  * property of the VCardType3Model class instance.
+  * so I just want to wait with the skipWhile RXJS function until the photo
+  * base64 string arrives, and I can set it to the photoBase64 property of
+  * the VCardType3Model class instance.
   * But if it is an empty string, it means the photo is nonexistent, so I can
   * just return the VCardType3Model class instance without any problem.
   *
@@ -116,15 +117,15 @@ export class JsonContactReaderService {
   * because in it there is an unsubscribe call of the photoSubscription$.
   *
   * Maybe it could have been solved more easily with the proper use of RXJS.
-  * TODO: Refactor this service class to be more unambiguous.
   * */
-  getContactData(fileUrl: string): Observable<VCardType3Model | undefined> {
+  getContactData(fileUrl: string): Observable<VCardType3Model> {
     return this._readContact(fileUrl).pipe(
       combineLatestWith(this.photoBase64Subject$),
+      skipWhile(
+        ([_, photoBase64]: [VCardType3Model, string | undefined]): boolean =>
+          photoBase64 === undefined
+      ),
       map(([vCardModel, photoBase64]: [VCardType3Model, string | undefined]) => {
-        if (photoBase64 === undefined) {
-          return undefined
-        }
         if (isStringNotEmpty(photoBase64)) {
           vCardModel.photoBase64 = photoBase64
         }
