@@ -1,63 +1,65 @@
-<div class="container">
+<router-outlet></router-outlet>
 
-  <div class="vcf-content-raw">
-    <textarea [value]="vcardTestString"></textarea>
-    <button [cdkCopyToClipboard]="vcardTestString">Copy to Clipboard</button>
-  </div>
+<!--<div class="container">-->
 
-  <div class="block">
-    <input
-      type="text"
-      placeholder="Write text here to decode from quoted-printable format..."
-      [ngModel]="textToBeDecoded"
-      (keyup)="onDecoderInputChange($event)"
-    >
+<!--  <div class="vcf-content-raw">-->
+<!--    <textarea [value]="vcardTestString"></textarea>-->
+<!--    <button [cdkCopyToClipboard]="vcardTestString">Copy to Clipboard</button>-->
+<!--  </div>-->
 
-    <div class="textarea-wrapper">
-      <label for="decodedText">Decoded Format:</label>
-      <textarea id="decodedText" [innerText]="decodedText"></textarea>
-      <button [cdkCopyToClipboard]="getDecodedText()">Copy to Clipboard</button>
-    </div>
-  </div>
+<!--  <div class="block">-->
+<!--    <input-->
+<!--      type="text"-->
+<!--      placeholder="Write text here to decode from quoted-printable format..."-->
+<!--      [ngModel]="textToBeDecoded"-->
+<!--      (keyup)="onDecoderInputChange($event)"-->
+<!--    >-->
 
-  <div class="block">
-    <input
-      type="text"
-      placeholder="Write text here to encode to quoted-printable format..."
-      [ngModel]="textToBeEncoded"
-      (keyup)="onEncoderInputChange($event)"
-    >
+<!--    <div class="textarea-wrapper">-->
+<!--      <label for="decodedText">Decoded Format:</label>-->
+<!--      <textarea id="decodedText" [innerText]="decodedText"></textarea>-->
+<!--      <button [cdkCopyToClipboard]="getDecodedText()">Copy to Clipboard</button>-->
+<!--    </div>-->
+<!--  </div>-->
 
-    <div class="textarea-wrapper">
-      <label for="quotedPrintable">Quoted-Printable Format:</label>
-      <textarea id="quotedPrintable" [innerText]="encodedText"></textarea>
-      <button>Copy to Clipboard</button>
-    </div>
-  </div>
+<!--  <div class="block">-->
+<!--    <input-->
+<!--      type="text"-->
+<!--      placeholder="Write text here to encode to quoted-printable format..."-->
+<!--      [ngModel]="textToBeEncoded"-->
+<!--      (keyup)="onEncoderInputChange($event)"-->
+<!--    >-->
 
-  <div class="block">
+<!--    <div class="textarea-wrapper">-->
+<!--      <label for="quotedPrintable">Quoted-Printable Format:</label>-->
+<!--      <textarea id="quotedPrintable" [innerText]="encodedText"></textarea>-->
+<!--      <button>Copy to Clipboard</button>-->
+<!--    </div>-->
+<!--  </div>-->
 
-    <div class="textarea-wrapper">
-      <label for="vCardRaw">vCard Raw Information:</label>
-      <textarea id="vCardRaw" #vCardRaw [value]="vcard.join('\n')"></textarea>
-      <button>Copy to Clipboard</button>
-    </div>
+<!--  <div class="block">-->
 
-    <div class="textarea-wrapper">
-      <label for="vCardUrl">vCard QR Code Url:</label>
-      <textarea
-        id="vCardUrl"
-        [value]="getVcardQrCodeUrl(vCardRaw.value)"
-      ></textarea>
-      <button>Copy to Clipboard</button>
-    </div>
+<!--    <div class="textarea-wrapper">-->
+<!--      <label for="vCardRaw">vCard Raw Information:</label>-->
+<!--      <textarea id="vCardRaw" #vCardRaw [value]="vcard.join('\n')"></textarea>-->
+<!--      <button>Copy to Clipboard</button>-->
+<!--    </div>-->
 
-    <img
-      [ngSrc]="getVcardQrCodeUrl(vCardRaw.value)"
-      width="500"
-      height="500"
-      alt="QR Code"
-    >
-  </div>
+<!--    <div class="textarea-wrapper">-->
+<!--      <label for="vCardUrl">vCard QR Code Url:</label>-->
+<!--      <textarea-->
+<!--        id="vCardUrl"-->
+<!--        [value]="getVcardQrCodeUrl(vCardRaw.value)"-->
+<!--      ></textarea>-->
+<!--      <button>Copy to Clipboard</button>-->
+<!--    </div>-->
 
-</div>
+<!--    <img-->
+<!--      [ngSrc]="getVcardQrCodeUrl(vCardRaw.value)"-->
+<!--      width="500"-->
+<!--      height="500"-->
+<!--      alt="QR Code"-->
+<!--    >-->
+<!--  </div>-->
+
+<!--</div>-->

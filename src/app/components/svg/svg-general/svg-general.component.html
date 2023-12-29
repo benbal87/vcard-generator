@@ -1,0 +1,29 @@
+@switch (type) {
+  @case (SvgTypes.CALL) {
+    <svg-call [style]="style" [class]="class" [title]="title" />
+  }
+  @case (SvgTypes.MAIL) {
+    <svg-mail [style]="style" [class]="class" [title]="title" />
+  }
+  @case (SvgTypes.SEND) {
+    <svg-send [style]="style" [class]="class" [title]="title" />
+  }
+  @case (SvgTypes.INTERNET) {
+    <svg-internet [style]="style" [class]="class" [title]="title" />
+  }
+  @case (SvgTypes.LOCATION) {
+    <svg-location [style]="style" [class]="class" [title]="title" />
+  }
+  @case (SvgTypes.WORK) {
+    <svg-work [style]="style" [class]="class" [title]="title" />
+  }
+  @case (SvgTypes.PERSON_ADD) {
+    <svg-person-add [style]="style" [class]="class" [title]="title" />
+  }
+  @case (SvgTypes.SAVE) {
+    <svg-save [style]="style" [class]="class" [title]="title" />
+  }
+  @default {
+    <svg-call [style]="style" [class]="class" [title]="title" />
+  }
+}
