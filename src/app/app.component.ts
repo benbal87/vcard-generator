@@ -84,13 +84,14 @@ export class AppComponent implements AfterViewInit {
 
   setVCardTest() {
     this.jsonContactReaderService.getContactData(
-      // 'assets/data/contact_data_a2z_company.json'
-      'assets/data/contact_data_vilavanh_boupha_plan_international.json'
+      'assets/data/contact_data_a2z_company.json'
+      // 'assets/data/contact_data_vilavanh_boupha_plan_international.json'
     ).subscribe({
       next: (r: VCardType3Model) => {
         console.log(
           'app.component.ts => subscribe => VCardType3Model.photoBase64 =>',
-          `"${r?.photoBase64?.substring(0, r?.photoBase64?.indexOf(','))}"`
+          `"${r?.photo?.photoBase64.substring(0, r?.photo?.photoBase64.indexOf(','))}"`
+          // r?.photoBase64
         )
         this.vcardTestString = r.vcard
       },

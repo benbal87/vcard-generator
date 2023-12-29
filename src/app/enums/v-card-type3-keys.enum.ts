@@ -1,4 +1,5 @@
 enum VCardType3KeysEnum {
+  PHOTO = 'photo',
   NAME = 'n',
   FORMATTED_NAME = 'fn',
   EMAIL = 'email',
@@ -7,7 +8,7 @@ enum VCardType3KeysEnum {
   NICKNAME = 'nickname',
   ORG = 'org',
   TITLE = 'title',
-  URL = 'url',
+  WEBPAGE = 'url',
   NOTE = 'note',
 }
 

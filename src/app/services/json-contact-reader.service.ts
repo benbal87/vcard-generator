@@ -16,11 +16,8 @@ import { z } from 'zod'
 import VCardType3AddressEnum from '../enums/v-card-type3-address-types.enum'
 import VCardType3EmailEnum from '../enums/v-card-type3-email.enum'
 import VCardType3PhoneEnum from '../enums/v-card-type3-phone.enum'
-import VCardType3Model, {
-  VCardType3ModelProps
-} from '../models/v-card-type3.model'
+import VCardType3Model from '../models/v-card-type3.model'
 import { ContactJsonType } from '../types/app.types'
-import { filterObjectKeysByList } from '../utils/object.util'
 import { isStringNotEmpty } from '../utils/string.util'
 
 @Injectable({
@@ -129,7 +126,7 @@ export class JsonContactReaderService {
       take(1),
       map(([vCardModel, photoBase64]: [VCardType3Model, string | undefined]) => {
         if (isStringNotEmpty(photoBase64)) {
-          vCardModel.photoBase64 = photoBase64
+          vCardModel.photo = photoBase64
         }
         return vCardModel
       }),
@@ -140,18 +137,12 @@ export class JsonContactReaderService {
   }
 
   private _readContact(fileUrl: string): Observable<VCardType3Model> {
-    return this.http.get<VCardType3Model>(fileUrl)
+    return this.http.get<ContactJsonType>(fileUrl)
       .pipe(
         map((json: ContactJsonType) => {
           this.contactDataJsonValidator.parse(json)
 
-          const jsonConverted: VCardType3ModelProps =
-            filterObjectKeysByList(
-              json,
-              ['photoUrl']
-            ) as unknown as VCardType3ModelProps
-          const conv: VCardType3Model = new VCardType3Model(jsonConverted)
-
+          const conv: VCardType3Model = new VCardType3Model(json)
           this.vCardType3ModelClassValidator.parse(conv)
 
           const photoUrl: string | undefined = json.photoUrl
@@ -179,7 +170,10 @@ export class JsonContactReaderService {
             this.photoBase64Subject$.next(b64)
           }
           reader.onerror = (event: any) => {
-            console.error('File could not be read: ' + event.target.error.code)
+            console.error(
+              'Image file could not be read: ' + event.target.error.code
+            )
+            this.photoBase64Subject$.next('')
           }
         }),
         catchError(e => throwError(() => e))

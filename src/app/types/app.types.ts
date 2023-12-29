@@ -30,6 +30,7 @@ export type NonEmpty2dArray<T> = [T, ...T[]][]
 
 export interface ContactJsonType {
   photoUrl?: string
+  photoBase64?: string
   name: {
     surname?: string // #1
     firstName: string // #2
@@ -37,7 +38,6 @@ export interface ContactJsonType {
     prefix?: string // #4
     suffix?: string // #5
   }
-  formattedName?: string
   nickName?: string
   phoneNumbers?: {
     types: VCardType3PhoneEnum[]
