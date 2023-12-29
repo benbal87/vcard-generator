@@ -6,7 +6,7 @@ enum VCardType3KeysEnum {
   PHONE = 'tel',
   ADDRESS = 'adr',
   NICKNAME = 'nickname',
-  ORG = 'org',
+  ORGANIZATION = 'org',
   TITLE = 'title',
   WEBPAGE = 'url',
   NOTE = 'note',

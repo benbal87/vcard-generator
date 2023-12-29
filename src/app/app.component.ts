@@ -93,7 +93,7 @@ export class AppComponent implements AfterViewInit {
           `"${r?.photo?.photoBase64.substring(0, r?.photo?.photoBase64.indexOf(','))}"`
           // r?.photoBase64
         )
-        this.vcardTestString = r.vcard
+        this.vcardTestString = r.vCardString
       },
       error: error => {
         console.log('error', error)

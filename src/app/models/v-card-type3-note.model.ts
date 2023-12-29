@@ -14,9 +14,8 @@ class VCardType3NoteModel {
 
   get vcardProperty(): vCard.Property | undefined {
     return new vCard.Property(
-      VCardType3KeysEnum.PHOTO,
-      this._note,
-      { encoding: 'b', type: 'jpg' }
+      VCardType3KeysEnum.NOTE,
+      this._note
     )
   }
 

@@ -14,7 +14,7 @@ class VCardType3OrganizationModel {
 
   get vcardProperty(): vCard.Property | undefined {
     return new vCard.Property(
-      VCardType3KeysEnum.ORG,
+      VCardType3KeysEnum.ORGANIZATION,
       this._organization
     )
   }

@@ -46,7 +46,7 @@ class VCardType3Model {
     this.note = args.note
   }
 
-  get vcard(): string {
+  get vcard(): vCard {
     const getVCardWithProps = (...properties: Array<vCard.Property | undefined>): vCard => {
       const vcf: vCard = new vCard()
       vcf.version = '3.0'
@@ -58,7 +58,7 @@ class VCardType3Model {
       return vcf
     }
 
-    const vcf: vCard = getVCardWithProps(
+    return getVCardWithProps(
       this.name.vcardProperty,
       this.name.formattedNameVCardProperty,
       ...(this.addresses ?? []).map(a => a.vcardProperty),
@@ -71,8 +71,10 @@ class VCardType3Model {
       this.webpage?.vcardProperty,
       this.note?.vcardProperty
     )
+  }
 
-    return vcf.toString()
+  get vCardString(): string {
+    return this.vcard.toString()
   }
 
   get name(): VCardType3NameModel {
