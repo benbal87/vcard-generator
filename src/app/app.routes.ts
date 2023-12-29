@@ -13,8 +13,13 @@ export const routes: Routes = [
     component: ContactPageComponent
   },
   {
-    path: '**',
+    path: '404',
     pathMatch: 'full',
     component: PageNotFoundComponent
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: '/404'
   }
 ]

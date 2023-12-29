@@ -1,13 +1,18 @@
-<div class="container">
+@if (contactDataVCardModel) {
+  <div class="container">
 
-  <div class="header">
-    <svg-general
-      [type]="SvgTypes.CALL"
-      [size]="2.5"
-      [title]="SvgTypes.CALL"
-    />
+    <div class="header">
+      <svg-general
+        [type]="SvgTypes.CALL"
+        [size]="2.5"
+        [title]="SvgTypes.CALL"
+      />
+      <h1>
+        {{ contactDataVCardModel.name.formattedName }}
+      </h1>
+    </div>
+
   </div>
-
-
-
-</div>
+} @else {
+  LOADING...
+}
