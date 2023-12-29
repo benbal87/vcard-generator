@@ -91,7 +91,7 @@ export class AppComponent implements AfterViewInit {
         console.log(
           'app.component.ts => subscribe => VCardType3Model.photoBase64 =>',
           `"${r?.photo?.photoBase64.substring(0, r?.photo?.photoBase64.indexOf(','))}"`
-          // r?.photoBase64
+          // r?.photo?.photoBase64
         )
         this.vcardTestString = r.vCardString
       },
