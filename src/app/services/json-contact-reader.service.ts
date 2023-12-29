@@ -9,6 +9,7 @@ import {
   Observable,
   skipWhile,
   Subscription,
+  take,
   throwError
 } from 'rxjs'
 import { z } from 'zod'
@@ -125,6 +126,7 @@ export class JsonContactReaderService {
         ([_, photoBase64]: [VCardType3Model, string | undefined]): boolean =>
           photoBase64 === undefined
       ),
+      take(1),
       map(([vCardModel, photoBase64]: [VCardType3Model, string | undefined]) => {
         if (isStringNotEmpty(photoBase64)) {
           vCardModel.photoBase64 = photoBase64

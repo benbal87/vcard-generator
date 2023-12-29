@@ -3,7 +3,6 @@ import { CommonModule, NgOptimizedImage } from '@angular/common'
 import { AfterViewInit, Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RouterOutlet } from '@angular/router'
-import { Subscription } from 'rxjs'
 import VCardType3Model from './models/v-card-type3.model'
 import {
   JsonContactReaderService
@@ -23,7 +22,6 @@ import {
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements AfterViewInit {
-  subs = new Subscription()
   textToBeEncoded: string = ''
   textToBeDecoded: string = ''
   encodedText: string = ''
@@ -85,25 +83,21 @@ export class AppComponent implements AfterViewInit {
   }
 
   setVCardTest() {
-    this.subs = this.jsonContactReaderService.getContactData(
-        'assets/data/contact_data_a2z_company.json')
-      .subscribe({
-        next: (r: VCardType3Model) => {
-          console.log(
-            'app.component.ts => subscribe => VCardType3Model.photoBase64 =>',
-            `"${r?.photoBase64?.substring(1, 50)}"`
-          )
-          this.vcardTestString = r.vcard
-          this.subs.unsubscribe()
-        },
-        // complete: () => {
-        //   console.log('### complete')
-        //   // this.subs.unsubscribe()
-        // },
-        error: error => {
-          console.log('error', error)
-        }
-      })
+    this.jsonContactReaderService.getContactData(
+      // 'assets/data/contact_data_a2z_company.json'
+      'assets/data/contact_data_vilavanh_boupha_plan_international.json'
+    ).subscribe({
+      next: (r: VCardType3Model) => {
+        console.log(
+          'app.component.ts => subscribe => VCardType3Model.photoBase64 =>',
+          `"${r?.photoBase64?.substring(0, r?.photoBase64?.indexOf(','))}"`
+        )
+        this.vcardTestString = r.vcard
+      },
+      error: error => {
+        console.log('error', error)
+      }
+    })
   }
 
   getDecodedText() {
