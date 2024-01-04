@@ -15,7 +15,7 @@ class VCardType3TitleModel {
   get vcardProperty(): vCard.Property | undefined {
     return new vCard.Property(
       VCardType3KeysEnum.TITLE,
-      this._title,
+      this._title
     )
   }
 

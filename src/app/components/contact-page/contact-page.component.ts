@@ -3,7 +3,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { CONTACTS_ASSETS } from '../../constants/app.constants'
 import SvgTypes from '../../enums/svg-types.enum'
-import VCardType3PhoneModel from '../../models/v-card-type3-phone.model'
 import VCardType3Model from '../../models/v-card-type3.model'
 import {
   JsonContactReaderService

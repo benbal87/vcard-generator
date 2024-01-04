@@ -1,23 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ContactPageComponent } from './contact-page.component';
+import { ContactPageComponent } from './contact-page.component'
 
 describe('VirtualContactPageComponent', () => {
-  let component: ContactPageComponent;
-  let fixture: ComponentFixture<ContactPageComponent>;
+  let component: ContactPageComponent
+  let fixture: ComponentFixture<ContactPageComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactPageComponent]
-    })
-    .compileComponents();
+        imports: [ContactPageComponent]
+      })
+      .compileComponents()
 
-    fixture = TestBed.createComponent(ContactPageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ContactPageComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

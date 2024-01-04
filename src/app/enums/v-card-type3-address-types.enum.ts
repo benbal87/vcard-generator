@@ -1,5 +1,6 @@
 enum VCardType3AddressEnum {
-  PREF = 'PREF', // to indicate the preferred delivery address when more than one address is specified
+  PREF = 'PREF', // to indicate the preferred delivery address when more than one
+               // address is specified
   WORK = 'WORK', // to indicate delivery address for a place of work
   HOME = 'HOME', // to indicate a delivery address for a residence
   // DOM = "DOM", // to indicate a domestic delivery address
