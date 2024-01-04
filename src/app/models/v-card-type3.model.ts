@@ -97,6 +97,7 @@ class VCardType3Model {
         addresses.map((e: any) =>
           new VCardType3AddressModel(e as unknown as VCardType3AddressModelProps)
         )
+      this.sortAddresses()
     }
   }
 
@@ -110,6 +111,7 @@ class VCardType3Model {
         emails.map((e: any) =>
           new VCardType3EmailModel(e as unknown as VCardType3EmailModelProps)
         )
+      this.sortEmails()
     }
   }
 
@@ -123,6 +125,7 @@ class VCardType3Model {
         phoneNumbers.map((e: any) =>
           new VCardType3PhoneModel(e as unknown as VCardType3PhoneModelProps)
         )
+      this.sortPhoneNumbers()
     }
   }
 
@@ -184,6 +187,56 @@ class VCardType3Model {
     if (isStringNotEmpty(note)) {
       this._note = new VCardType3NoteModel({ note })
     }
+  }
+
+  get primaryPhone(): VCardType3PhoneModel | undefined {
+    return isArrayNotEmpty(this.phoneNumbers) ? this.phoneNumbers[0] : undefined
+  }
+
+  get primaryEmail(): VCardType3EmailModel | undefined {
+    return isArrayNotEmpty(this.emails) ? this.emails[0] : undefined
+  }
+
+  get primaryAddress(): VCardType3AddressModel | undefined {
+    return isArrayNotEmpty(this.addresses) ? this.addresses[0] : undefined
+  }
+
+  sortAddresses(): void {
+    if (isArrayNotEmpty(this.addresses)) {
+      this.sortLists(this.addresses, VCardType3AddressModel.TYPE_SORTING)
+    }
+  }
+
+  sortPhoneNumbers(): void {
+    if (isArrayNotEmpty(this.phoneNumbers)) {
+      this.sortLists(this.phoneNumbers, VCardType3PhoneModel.TYPE_SORTING)
+    }
+  }
+
+  sortEmails(): void {
+    if (isArrayNotEmpty(this.emails)) {
+      this.sortLists(this.emails, VCardType3EmailModel.TYPE_SORTING)
+    }
+  }
+
+  sortLists(
+    list: (VCardType3AddressModel | VCardType3PhoneModel | VCardType3EmailModel)[],
+    order: string[]
+  ): void {
+    list.sort((a, b) => {
+      const minLength: number = Math.min(a.types.length, b.types.length)
+
+      for (let i = 0; i < minLength; i++) {
+        const indexA: number = order.indexOf(a.types[i])
+        const indexB: number = order.indexOf(b.types[i])
+
+        if (indexA !== indexB) {
+          return indexA - indexB
+        }
+      }
+
+      return a.types.length - b.types.length
+    })
   }
 }
 

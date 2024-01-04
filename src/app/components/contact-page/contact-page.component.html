@@ -2,15 +2,84 @@
   <div class="container">
 
     <div class="header">
-      <svg-general
-        [type]="SvgTypes.CALL"
-        [size]="2.5"
-        [title]="SvgTypes.CALL"
-      />
       <h1>
         {{ contactDataVCardModel.name.formattedName }}
+        TITLE
       </h1>
+
+      @if (contactDataVCardModel?.primaryPhone?.phoneNumber) {
+        <div class="header__btn-wrapper">
+          <a [href]="getPrimaryPhoneHref()" target="_blank">
+            <svg-general
+              [type]="SvgTypes.CALL"
+              [size]="2.5"
+              [title]="SvgTypes.CALL"
+            />
+            call
+          </a>
+        </div>
+      }
+
+      @if (contactDataVCardModel?.primaryEmail?.email) {
+        <div class="header__btn-wrapper">
+          <a [href]="getPrimaryEmailHref()" target="_blank">
+            <svg-general
+              [type]="SvgTypes.SEND"
+              [size]="2.5"
+              [title]="SvgTypes.MAIL"
+            />
+            email
+          </a>
+        </div>
+      }
+
+      @if (contactDataVCardModel?.primaryAddress?.formattedAddress) {
+        <div class="header__btn-wrapper">
+          <a [href]="getPrimaryAddressHref()" target="_blank">
+            <svg-general
+              [type]="SvgTypes.LOCATION"
+              [size]="2.5"
+              title="Directions"
+            />
+            directions
+          </a>
+        </div>
+      }
+
     </div>
+
+    @if (isArrayNotEmpty(contactDataVCardModel.phoneNumbers)) {
+      <div>
+        <svg-general
+          [type]="SvgTypes.CALL"
+          [size]="2.5"
+          [title]="SvgTypes.CALL"
+        />
+
+        <div>
+          @for (phone of contactDataVCardModel.phoneNumbers; track phone.phoneNumber) {
+            <div>
+              <span>
+                {{ phone.phoneNumber }}
+              </span>
+              <span>
+                {{ phone.typeToString }}
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    EMAILS...
+
+    WORK INFO:
+    - COMPANY
+    - TITLE
+
+    ADDRESSES
+
+    WEBSITE
 
   </div>
 } @else {

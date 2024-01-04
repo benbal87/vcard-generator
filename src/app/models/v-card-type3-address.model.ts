@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import vCard from 'vcf'
 import VCardType3AddressEnum from '../enums/v-card-type3-address-types.enum'
 import VCardType3KeysEnum from '../enums/v-card-type3-keys.enum'
@@ -14,7 +15,7 @@ interface VCardType3AddressModelProps {
 }
 
 class VCardType3AddressModel {
-  private _types: VCardType3AddressEnum[]
+  private _types!: VCardType3AddressEnum[]
   private _postOfficeBox?: string
   private _extendedAddress?: string
   private _streetAddress: string
@@ -22,9 +23,19 @@ class VCardType3AddressModel {
   private _state?: string
   private _postalCode?: string
   private _countryName: string
+  public static readonly TYPE_SORTING: string[] = [
+    VCardType3AddressEnum.PREF,
+    VCardType3AddressEnum.WORK,
+    VCardType3AddressEnum.HOME
+  ].map(e => e.toLowerCase())
+  public static readonly TYPE_STRINGS = {
+    [VCardType3AddressEnum.PREF]: 'Address',
+    [VCardType3AddressEnum.WORK]: 'Work Address',
+    [VCardType3AddressEnum.HOME]: 'Home Address'
+  }
 
   constructor(args: VCardType3AddressModelProps) {
-    this._types = args.types
+    this.types = args.types
     this._postOfficeBox = args.postOfficeBox
     this._extendedAddress = args.extendedAddress
     this._streetAddress = args.streetAddress
@@ -55,7 +66,15 @@ class VCardType3AddressModel {
   }
 
   set types(value: VCardType3AddressEnum[]) {
-    this._types = value
+    let types = value
+    if (value.length > 1) {
+      types = Array.from(new Set(_.cloneDeep(value)))
+      types.sort(
+        (a, b): number =>
+          VCardType3AddressModel.TYPE_SORTING.indexOf(a) -
+          VCardType3AddressModel.TYPE_SORTING.indexOf(b))
+    }
+    this._types = types
   }
 
   get postOfficeBox(): string {
@@ -112,6 +131,25 @@ class VCardType3AddressModel {
 
   set countryName(value: string) {
     this._countryName = value
+  }
+
+  get formattedAddress(): string {
+    return [
+      this.streetAddress,
+      this.extendedAddress,
+      this.city,
+      this.state,
+      this.countryName,
+      this.postalCode
+    ].join(', ')
+  }
+
+  get typeToString(): string {
+    const firstType =
+      this.types.find(t => t !== VCardType3AddressEnum.PREF)
+    return firstType
+      ? VCardType3AddressModel.TYPE_STRINGS[firstType]
+      : VCardType3AddressModel.TYPE_STRINGS[VCardType3AddressEnum.PREF]
   }
 }
 

@@ -8,13 +8,15 @@
   "phoneNumbers": [
     {
       "types": [
-        "WORK"
+        "WORK",
+        "VOICE"
       ],
       "phoneNumber": "+856 21 353 408"
     },
     {
       "types": [
         "WORK",
+        "VOICE",
         "PREF"
       ],
       "phoneNumber": "+856 20 5516 2914"

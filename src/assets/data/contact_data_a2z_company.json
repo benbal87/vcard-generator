@@ -7,13 +7,15 @@
     {
       "types": [
         "WORK",
+        "VOICE",
         "PREF"
       ],
       "phoneNumber": "+856 20 7899 6697"
     },
     {
       "types": [
-        "WORK"
+        "WORK",
+        "VOICE"
       ],
       "phoneNumber": "+856 20 5789 6354"
     }
