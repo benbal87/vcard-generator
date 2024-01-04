@@ -2,67 +2,95 @@
   <div class="container">
 
     <div class="header">
-      <h1>
-        {{ contactDataVCardModel.name.formattedName }}
-        TITLE
-      </h1>
+      <div class="name-wrapper">
+        <div class="name">{{ contactDataVCardModel.name.formattedName }}</div>
 
-      @if (contactDataVCardModel?.primaryPhone?.phoneNumber) {
-        <div class="header__btn-wrapper">
-          <a [href]="getPrimaryPhoneHref()" target="_blank">
-            <svg-general
-              [type]="SvgTypes.CALL"
-              [size]="2.5"
-              [title]="SvgTypes.CALL"
-            />
-            call
-          </a>
-        </div>
-      }
+        @if (contactDataVCardModel.title) {
+          <div class="title">{{ contactDataVCardModel.title?.title }}</div>
+        }
 
-      @if (contactDataVCardModel?.primaryEmail?.email) {
-        <div class="header__btn-wrapper">
-          <a [href]="getPrimaryEmailHref()" target="_blank">
-            <svg-general
-              [type]="SvgTypes.SEND"
-              [size]="2.5"
-              [title]="SvgTypes.MAIL"
-            />
-            email
-          </a>
-        </div>
-      }
+        @if (contactDataVCardModel.nickname) {
+          <div class="nickname">{{ contactDataVCardModel.nickname?.nickname }}</div>
+        }
+      </div>
 
-      @if (contactDataVCardModel?.primaryAddress?.formattedAddress) {
-        <div class="header__btn-wrapper">
-          <a [href]="getPrimaryAddressHref()" target="_blank">
-            <svg-general
-              [type]="SvgTypes.LOCATION"
-              [size]="2.5"
-              title="Directions"
-            />
-            directions
-          </a>
-        </div>
-      }
+      <div class="header-btn-container">
+        @if (contactDataVCardModel?.primaryPhone?.phoneNumber) {
+          <div class="header__btn-wrapper">
+            <a [href]="getPrimaryPhoneHref()" target="_blank">
+              <svg-general
+                [type]="SvgTypes.CALL"
+                [size]="2.5"
+                [title]="SvgTypes.CALL"
+              />
+              call
+            </a>
+          </div>
+        }
+
+        @if (contactDataVCardModel?.primaryEmail?.email) {
+          <div class="header__btn-wrapper">
+            <a [href]="getPrimaryEmailHref()" target="_blank">
+              <svg-general
+                [type]="SvgTypes.SEND"
+                [size]="2.5"
+                [title]="SvgTypes.MAIL"
+              />
+              email
+            </a>
+          </div>
+        }
+
+        @if (contactDataVCardModel?.primaryAddress?.formattedAddress) {
+          <div class="header__btn-wrapper">
+            <a [href]="getPrimaryAddressHref()" target="_blank">
+              <svg-general
+                [type]="SvgTypes.LOCATION"
+                [size]="2.5"
+                title="Directions"
+              />
+              directions
+            </a>
+          </div>
+        }
+      </div>
 
     </div>
 
+    @if (contactDataVCardModel.organization || contactDataVCardModel.title) {
+      <div class="">
+        <svg-general
+          [type]="SvgTypes.WORK"
+          [size]="2.5"
+          [title]="SvgTypes.WORK"
+        />
+
+        <div>
+          @if (contactDataVCardModel.organization) {
+            <span>{{ contactDataVCardModel.organization?.organization }}</span>
+          }
+          @if (contactDataVCardModel.title) {
+            <span>{{ contactDataVCardModel.title?.title }}</span>
+          }
+        </div>
+      </div>
+    }
+
     @if (isArrayNotEmpty(contactDataVCardModel.phoneNumbers)) {
-      <div>
+      <div class="">
         <svg-general
           [type]="SvgTypes.CALL"
           [size]="2.5"
           [title]="SvgTypes.CALL"
         />
 
-        <div>
+        <div class="">
           @for (phone of contactDataVCardModel.phoneNumbers; track phone.phoneNumber) {
-            <div>
-              <span>
+            <div class="">
+              <span class="">
                 {{ phone.phoneNumber }}
               </span>
-              <span>
+              <span class="">
                 {{ phone.typeToString }}
               </span>
             </div>
@@ -71,15 +99,70 @@
       </div>
     }
 
-    EMAILS...
+    @if (isArrayNotEmpty(contactDataVCardModel.emails)) {
+      <div class="">
+        <svg-general
+          [type]="SvgTypes.MAIL"
+          [size]="2.5"
+          title="Email"
+        />
 
-    WORK INFO:
-    - COMPANY
-    - TITLE
+        <div class="">
+          @for (email of contactDataVCardModel.emails; track email.email) {
+            <div class="">
+              <span class="">
+                {{ email.email }}
+              </span>
+              <span class="">
+                {{ email.typeToString }}
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+    }
 
-    ADDRESSES
+    @if (isArrayNotEmpty(contactDataVCardModel.addresses)) {
+      <div class="">
+        <svg-general
+          [type]="SvgTypes.LOCATION"
+          [size]="2.5"
+          [title]="SvgTypes.LOCATION"
+        />
 
-    WEBSITE
+        <div class="">
+          @for (address of contactDataVCardModel.addresses; track address.formattedAddress) {
+            <div class="">
+              <span class="">
+                {{ address.formattedAddress }}
+              </span>
+              <span class="">
+                {{ address.typeToString }}
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (contactDataVCardModel.webpage) {
+      <div>
+        <svg-general
+          [type]="SvgTypes.INTERNET"
+          [size]="2.5"
+          [title]="SvgTypes.INTERNET"
+        />
+
+        <div>
+          <span>
+            {{ contactDataVCardModel.webpage.webpage }}
+          </span>
+          <span>
+            Website
+          </span>
+        </div>
+      </div>
+    }
 
   </div>
 } @else {
