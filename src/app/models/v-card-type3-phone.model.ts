@@ -22,8 +22,8 @@ class VCardType3PhoneModel {
     [VCardType3PhoneEnum.PREF]: 'Telephone',
     [VCardType3PhoneEnum.WORK]: 'Work',
     [VCardType3PhoneEnum.HOME]: 'Home',
-    [VCardType3PhoneEnum.VOICE]: 'Telephone',
-    [VCardType3PhoneEnum.CELL]: 'Mobile'
+    [VCardType3PhoneEnum.CELL]: 'Mobile',
+    [VCardType3PhoneEnum.VOICE]: 'Telephone'
   }
 
   constructor(args: VCardType3PhoneModelProps) {
@@ -46,11 +46,10 @@ class VCardType3PhoneModel {
   set types(value: VCardType3PhoneEnum[]) {
     let types = value
     if (value.length > 1) {
-      types = Array.from(new Set(_.cloneDeep(value)))
-      types.sort(
+      types = Array.from(new Set(_.cloneDeep(value))).sort(
         (a, b): number =>
-          VCardType3PhoneModel.TYPE_SORTING.indexOf(a) -
-          VCardType3PhoneModel.TYPE_SORTING.indexOf(b))
+          VCardType3PhoneModel.TYPE_SORTING.indexOf(a.toLowerCase()) -
+          VCardType3PhoneModel.TYPE_SORTING.indexOf(b.toLowerCase()))
     }
     this._types = types
   }
@@ -64,10 +63,21 @@ class VCardType3PhoneModel {
   }
 
   get typeToString(): string {
-    const firstType =
+    // let result: string =
+    //   VCardType3PhoneModel.TYPE_STRINGS[VCardType3PhoneEnum.PREF]
+    // const types = this.types
+    // for (let i = 0; i < this.types.length; i++) {
+    //   const t = types[i]
+    //   if (t !== VCardType3PhoneEnum.PREF) {
+    //     result = VCardType3PhoneModel.TYPE_STRINGS[t]
+    //     break
+    //   }
+    // }
+
+    const firstNotPrefType =
       this.types.find(t => t !== VCardType3PhoneEnum.PREF)
-    return firstType
-      ? VCardType3PhoneModel.TYPE_STRINGS[firstType]
+    return firstNotPrefType
+      ? VCardType3PhoneModel.TYPE_STRINGS[firstNotPrefType]
       : VCardType3PhoneModel.TYPE_STRINGS[VCardType3PhoneEnum.PREF]
   }
 }

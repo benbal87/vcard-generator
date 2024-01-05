@@ -1,17 +1,27 @@
 {
-  "photoUrl": "assets/data/contact_data_bpem_plan.jpg",
+  "photoUrl": "assets/data/contact_data_bpem_plan.png",
   "name": {
     "firstName": "Vilavanh",
-    "surName": "Boupha",
-    "prefix": "Ms."
+    "surname": "Boupha",
+    "prefix": "Ms.",
+    "suffix": "MD.",
+    "middleName": "Noy"
   },
+  "nickname": "Bpem",
   "phoneNumbers": [
+    {
+      "types": [
+        "VOICE",
+        "CELL"
+      ],
+      "phoneNumber": "+856 333333333333333"
+    },
     {
       "types": [
         "WORK",
         "VOICE"
       ],
-      "phoneNumber": "+856 21 353 408"
+      "phoneNumber": "+856 2222222222222"
     },
     {
       "types": [
@@ -19,7 +29,7 @@
         "VOICE",
         "PREF"
       ],
-      "phoneNumber": "+856 20 5516 2914"
+      "phoneNumber": "+856 1111111111"
     }
   ],
   "addresses": [
@@ -43,5 +53,6 @@
   ],
   "organization": "Plan International Laos",
   "title": "Grant Finance Manager",
-  "note": "Skype: bpemvp"
+  "note": "Skype: bpemvp",
+  "webpage": "https://www.github.com"
 }

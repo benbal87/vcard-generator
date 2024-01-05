@@ -38,12 +38,12 @@ export class JsonContactReaderService {
       middleName: z.string().optional(),
       prefix: z.string().optional(),
       suffix: z.string().optional()
-    }),
-    nickName: z.string().optional(),
+    }).strict(),
+    nickname: z.string().optional(),
     phoneNumbers: z.array(z.object({
       types: z.array(z.nativeEnum(VCardType3PhoneEnum)),
       phoneNumber: z.string()
-    }).required()).optional(),
+    }).strict().required()).optional(),
     addresses: z.array(z.object({
       types: z.array(z.nativeEnum(VCardType3AddressEnum)),
       postOfficeBox: z.string().optional(),
@@ -53,11 +53,11 @@ export class JsonContactReaderService {
       state: z.string().optional(),
       postalCode: z.string().optional(),
       countryName: z.string()
-    })).optional(),
+    }).strict()).optional(),
     emails: z.array(z.object({
       types: z.array(z.nativeEnum(VCardType3EmailEnum)),
       email: z.string().email()
-    }).required()).optional(),
+    }).strict().required()).optional(),
     organization: z.string().optional(),
     title: z.string().optional(),
     webpage: z.string().optional(),

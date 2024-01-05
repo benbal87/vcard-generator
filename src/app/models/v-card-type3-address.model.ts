@@ -49,13 +49,13 @@ class VCardType3AddressModel {
     return new vCard.Property(
       VCardType3KeysEnum.ADDRESS,
       [
-        this.postOfficeBox,
-        this.extendedAddress,
-        this.streetAddress,
-        this.city,
-        this.state,
-        this.postalCode,
-        this.countryName
+        this.postOfficeBox ?? '',
+        this.extendedAddress ?? '',
+        this.streetAddress ?? '',
+        this.city ?? '',
+        this.state ?? '',
+        this.postalCode ?? '',
+        this.countryName ?? ''
       ].join(';'),
       { type: this.types }
     )
@@ -71,22 +71,22 @@ class VCardType3AddressModel {
       types = Array.from(new Set(_.cloneDeep(value)))
       types.sort(
         (a, b): number =>
-          VCardType3AddressModel.TYPE_SORTING.indexOf(a) -
-          VCardType3AddressModel.TYPE_SORTING.indexOf(b))
+          VCardType3AddressModel.TYPE_SORTING.indexOf(a.toLowerCase()) -
+          VCardType3AddressModel.TYPE_SORTING.indexOf(b.toLowerCase()))
     }
     this._types = types
   }
 
-  get postOfficeBox(): string {
-    return this._postOfficeBox ?? ''
+  get postOfficeBox(): string | undefined {
+    return this._postOfficeBox
   }
 
   set postOfficeBox(value: string) {
     this._postOfficeBox = value
   }
 
-  get extendedAddress(): string {
-    return this._extendedAddress ?? ''
+  get extendedAddress(): string | undefined {
+    return this._extendedAddress
   }
 
   set extendedAddress(value: string) {
@@ -109,16 +109,16 @@ class VCardType3AddressModel {
     this._city = value
   }
 
-  get state(): string {
-    return this._state ?? ''
+  get state(): string | undefined {
+    return this._state
   }
 
   set state(value: string) {
     this._state = value
   }
 
-  get postalCode(): string {
-    return this._postalCode ?? ''
+  get postalCode(): string | undefined {
+    return this._postalCode
   }
 
   set postalCode(value: string) {
@@ -135,12 +135,12 @@ class VCardType3AddressModel {
 
   get formattedAddress(): string {
     return [
-      this.streetAddress,
-      this.extendedAddress,
-      this.city,
-      this.state,
-      this.countryName,
-      this.postalCode
+      ...(this.streetAddress ? [this.streetAddress] : []),
+      ...(this.extendedAddress ? [this.extendedAddress] : []),
+      ...(this.city ? [this.city] : []),
+      ...(this.state ? [this.state] : []),
+      ...(this.countryName ? [this.countryName] : []),
+      ...(this.postalCode ? [this.postalCode] : [])
     ].join(', ')
   }
 

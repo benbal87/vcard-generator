@@ -1,0 +1,79 @@
+{
+  "name": {
+    "firstName": "Balázs",
+    "surname": "Benedek",
+    "prefix": "Mr.",
+    "suffix": "MD.",
+    "middleName": "Béla"
+  },
+  "nickname": "Bazsi",
+  "phoneNumbers": [
+    {
+      "types": [
+        "PREF",
+        "VOICE",
+        "CELL"
+      ],
+      "phoneNumber": "+856 1111111111"
+    },
+    {
+      "types": [
+        "CELL",
+        "VOICE"
+      ],
+      "phoneNumber": "+36 2222222222"
+    }
+  ],
+  "addresses": [
+    {
+      "types": [
+        "HOME"
+      ],
+      "streetAddress":  "Erdész utca 20/A",
+      "city": "Miskolc",
+      "state":  "Borsod-Abaúj-Zemplén megye",
+      "postalCode": "3535",
+      "countryName":  "Hungary"
+    },
+    {
+      "types": [
+        "HOME",
+        "PREF"
+      ],
+      "extendedAddress": "Phonsinuan village, Sisattanak District",
+      "streetAddress":  "Unit 14, House no 266/1, Souphavanh Apartment",
+      "city": "Vientiane",
+      "state":  "Vientiane Province",
+      "postalCode": "01030",
+      "countryName":  "Laos"
+    },
+    {
+      "types": [
+        "WORK",
+        "PREF"
+      ],
+      "streetAddress": "House no. 203, Unit 10, Phonsinouan Village, Sisattanak District",
+      "city": "Vientiane Capital",
+      "countryName": "Lao PDR"
+    }
+  ],
+  "emails": [
+    {
+      "types": [
+        "INTERNET"
+      ],
+      "email": "madeup@gmail.com"
+    },
+    {
+      "types": [
+        "INTERNET",
+        "PREF"
+      ],
+      "email": "benbal87@gmail.com"
+    }
+  ],
+  "organization": "Very Big Organization",
+  "title": "IT Department Leader",
+  "note": "Notorious owl executioner and camel walker...",
+  "webpage": "https://github.com/benbal87"
+}

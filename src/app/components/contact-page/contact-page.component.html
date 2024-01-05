@@ -6,16 +6,16 @@
         <div class="name">{{ contactDataVCardModel.name.formattedName }}</div>
 
         @if (contactDataVCardModel.title) {
-          <div class="title">{{ contactDataVCardModel.title?.title }}</div>
+          <div class="title">{{ contactDataVCardModel.title.title }}</div>
         }
 
         @if (contactDataVCardModel.nickname) {
-          <div class="nickname">{{ contactDataVCardModel.nickname?.nickname }}</div>
+          <div class="nickname">{{ contactDataVCardModel.nickname.nickname }}</div>
         }
       </div>
 
       <div class="header-btn-container">
-        @if (contactDataVCardModel?.primaryPhone?.phoneNumber) {
+        @if (contactDataVCardModel.primaryPhone?.phoneNumber) {
           <div class="header__btn-wrapper">
             <a [href]="getPrimaryPhoneHref()" target="_blank">
               <svg-general
@@ -28,7 +28,7 @@
           </div>
         }
 
-        @if (contactDataVCardModel?.primaryEmail?.email) {
+        @if (contactDataVCardModel.primaryEmail?.email) {
           <div class="header__btn-wrapper">
             <a [href]="getPrimaryEmailHref()" target="_blank">
               <svg-general
@@ -41,7 +41,7 @@
           </div>
         }
 
-        @if (contactDataVCardModel?.primaryAddress?.formattedAddress) {
+        @if (contactDataVCardModel.primaryAddress?.formattedAddress) {
           <div class="header__btn-wrapper">
             <a [href]="getPrimaryAddressHref()" target="_blank">
               <svg-general
@@ -67,10 +67,10 @@
 
         <div>
           @if (contactDataVCardModel.organization) {
-            <span>{{ contactDataVCardModel.organization?.organization }}</span>
+            <span>{{ contactDataVCardModel.organization.organization }}</span>
           }
           @if (contactDataVCardModel.title) {
-            <span>{{ contactDataVCardModel.title?.title }}</span>
+            <span>{{ contactDataVCardModel.title.title }}</span>
           }
         </div>
       </div>
@@ -164,7 +164,30 @@
       </div>
     }
 
+    @if (contactDataVCardModel.note) {
+      <div>
+        <svg-general
+          [type]="SvgTypes.MAIL"
+          [size]="2.5"
+          [title]="SvgTypes.MAIL"
+        />
+
+        <div>
+          <span>
+            {{ contactDataVCardModel.note.note }}
+          </span>
+          <span>
+            Notes
+          </span>
+        </div>
+      </div>
+    }
+
   </div>
 } @else {
-  LOADING...
+<!--  TODO: Loading component-->
 }
+
+<!--TODO: handle case when there is no data or error happened!-->
+<!--TODO: Also when the photo can not be found on the given path!-->
+<!--TODO: Also handle when there are unrecognized keys in the vcard data json.-->

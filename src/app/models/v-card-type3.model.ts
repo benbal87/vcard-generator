@@ -39,7 +39,7 @@ class VCardType3Model {
     this.emails = args.emails
     this.phoneNumbers = args.phoneNumbers
     this.photo = args.photoBase64
-    this.nickname = args.nickName
+    this.nickname = args.nickname
     this.organization = args.organization
     this.title = args.title
     this.webpage = args.webpage
@@ -203,39 +203,29 @@ class VCardType3Model {
 
   sortAddresses(): void {
     if (isArrayNotEmpty(this.addresses)) {
-      this.sortLists(this.addresses, VCardType3AddressModel.TYPE_SORTING)
+      this.sortLists(this.addresses)
     }
   }
 
   sortPhoneNumbers(): void {
     if (isArrayNotEmpty(this.phoneNumbers)) {
-      this.sortLists(this.phoneNumbers, VCardType3PhoneModel.TYPE_SORTING)
+      this.sortLists(this.phoneNumbers)
     }
   }
 
   sortEmails(): void {
     if (isArrayNotEmpty(this.emails)) {
-      this.sortLists(this.emails, VCardType3EmailModel.TYPE_SORTING)
+      this.sortLists(this.emails)
     }
   }
 
   sortLists(
-    list: (VCardType3AddressModel | VCardType3PhoneModel | VCardType3EmailModel)[],
-    order: string[]
+    list: (VCardType3AddressModel | VCardType3PhoneModel | VCardType3EmailModel)[]
   ): void {
     list.sort((a, b) => {
-      const minLength: number = Math.min(a.types.length, b.types.length)
-
-      for (let i = 0; i < minLength; i++) {
-        const indexA: number = order.indexOf(a.types[i])
-        const indexB: number = order.indexOf(b.types[i])
-
-        if (indexA !== indexB) {
-          return indexA - indexB
-        }
-      }
-
-      return a.types.length - b.types.length
+      const isAPref: boolean = a.types.includes('PREF' as never)
+      const isBPref: boolean = b.types.includes('PREF' as never)
+      return (isAPref && !isBPref) ? -1 : (!isAPref && isBPref) ? 1 : 0
     })
   }
 }

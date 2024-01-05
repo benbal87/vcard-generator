@@ -38,7 +38,7 @@ export interface ContactJsonType {
     prefix?: string // #4
     suffix?: string // #5
   }
-  nickName?: string
+  nickname?: string
   phoneNumbers?: {
     types: VCardType3PhoneEnum[]
     phoneNumber: string

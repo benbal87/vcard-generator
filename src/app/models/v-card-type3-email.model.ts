@@ -45,8 +45,8 @@ class VCardType3EmailModel {
       types = Array.from(new Set(_.cloneDeep(value)))
       types.sort(
         (a, b): number =>
-          VCardType3EmailModel.TYPE_SORTING.indexOf(a) -
-          VCardType3EmailModel.TYPE_SORTING.indexOf(b))
+          VCardType3EmailModel.TYPE_SORTING.indexOf(a.toLowerCase()) -
+          VCardType3EmailModel.TYPE_SORTING.indexOf(b.toLowerCase()))
     }
     this._types = types
   }
