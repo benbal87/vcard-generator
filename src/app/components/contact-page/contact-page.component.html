@@ -252,8 +252,12 @@
       />
     </button>
     <mat-menu #floatingBtnMenu="matMenu">
-      <button mat-menu-item>Save vCard</button>
-      <button mat-menu-item>Get QR Code</button>
+      <a mat-menu-item [href]="getVCardUrl()" download="vcard.vcf">
+        Save vCard
+      </a>
+      <a mat-menu-item>
+        Get QR Code
+      </a>
     </mat-menu>
 
   </div>

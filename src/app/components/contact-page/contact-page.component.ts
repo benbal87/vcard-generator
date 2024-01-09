@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { MatMenuModule } from '@angular/material/menu'
+import { DomSanitizer } from '@angular/platform-browser'
 import { ActivatedRoute, Params, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { CONTACTS_ASSETS } from '../../constants/app.constants'
@@ -44,7 +45,8 @@ export class ContactPageComponent implements OnInit, OnDestroy {
   constructor(
     private ar: ActivatedRoute,
     private router: Router,
-    private jsonContactReaderService: JsonContactReaderService
+    private jsonContactReaderService: JsonContactReaderService,
+    private sanitizer: DomSanitizer
   ) {
   }
 
@@ -140,5 +142,16 @@ export class ContactPageComponent implements OnInit, OnDestroy {
 
   getAddressHref(address: VCardType3AddressModel): string {
     return GOOGLE_MAPS_URL_PATTERN + address.formattedAddress
+  }
+
+  getVCardUrl() {
+    const data = this.contactDataVCardModel?.vCardString
+    const blob = data
+      ? new Blob([data], { type: 'application/octet-stream' })
+      : undefined
+    return blob
+      ? this.sanitizer
+        .bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob))
+      : undefined
   }
 }
