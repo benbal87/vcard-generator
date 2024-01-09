@@ -243,6 +243,19 @@
 
     </div>
 
+    <button class="floating-btn" [matMenuTriggerFor]="floatingBtnMenu">
+      <svg-general
+        [type]="SvgTypes.PERSON_ADD"
+        [size]="1.8"
+        [title]="'Save'"
+        [style]="{ fill: 'white' }"
+      />
+    </button>
+    <mat-menu #floatingBtnMenu="matMenu">
+      <button mat-menu-item>Save vCard</button>
+      <button mat-menu-item>Get QR Code</button>
+    </mat-menu>
+
   </div>
 
 } @else {

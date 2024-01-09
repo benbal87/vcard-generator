@@ -6,11 +6,10 @@
 }
 
 div.page-container {
-  background-color: green;
   min-height: 100vh;
+  position: relative;
 
   div.vcard-container {
-    background-color: red;
 
     div.vcard-header-wrapper {
       background-color: $header-bg-color;
@@ -138,7 +137,23 @@ div.page-container {
     }
   }
 
+  button.floating-btn {
+    $bg-color: #e71c62;
+    position: fixed;
+    right: 5rem;
+    bottom: 5rem;
+    border: none;
+    border-radius: 50%;
+    outline: none;
+    padding: 1rem;
+    background-color: $bg-color;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
 
+    &:hover {
+      background-color: darken($bg-color, 10%);
+    }
+  }
 }
 
 div.error-wrapper {

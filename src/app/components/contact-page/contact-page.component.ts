@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
+import { MatMenuModule } from '@angular/material/menu'
 import { ActivatedRoute, Params, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { CONTACTS_ASSETS } from '../../constants/app.constants'
@@ -23,7 +24,8 @@ import {
   standalone: true,
   imports: [
     SvgGeneralComponent,
-    LoaderComponent
+    LoaderComponent,
+    MatMenuModule
   ],
   templateUrl: './contact-page.component.html',
   styleUrl: './contact-page.component.scss'
@@ -74,9 +76,9 @@ export class ContactPageComponent implements OnInit, OnDestroy {
         this.jsonContactReaderService.getContactData(contactDataJsonUrl)
           .subscribe({
             next: (vCardModel: VCardType3Model): void => {
-              setTimeout(() => {
-                this.contactDataVCardModel = vCardModel
-              }, 3000)
+              // setTimeout(() => {
+              this.contactDataVCardModel = vCardModel
+              // }, 3000)
             },
             error: error => {
               console.error(
