@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { CONTACTS_ASSETS } from '../../constants/app.constants'
 import SvgTypes from '../../enums/svg-types.enum'
+import VCardType3AddressModel from '../../models/v-card-type3-address.model'
 import VCardType3Model from '../../models/v-card-type3.model'
 import {
   JsonContactReaderService
@@ -90,19 +91,27 @@ export class ContactPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  getPhoneHref(phoneNumber: string): string {
+    return HREF_TEL_PREFIX + phoneNumber
+  }
+
   getPrimaryPhoneHref(): string | undefined {
     const primaryPhoneNumber: string | undefined =
       this.contactDataVCardModel?.primaryPhone?.phoneNumber
     return isStringNotEmpty(primaryPhoneNumber)
-      ? HREF_TEL_PREFIX + primaryPhoneNumber
+      ? this.getPhoneHref(primaryPhoneNumber)
       : undefined
+  }
+
+  getEmailHref(email: string): string {
+    return HREF_EMAIL_PREFIX + email
   }
 
   getPrimaryEmailHref(): string | undefined {
     const primaryEmail: string | undefined =
       this.contactDataVCardModel?.primaryEmail?.email
     return isStringNotEmpty(primaryEmail)
-      ? HREF_EMAIL_PREFIX + primaryEmail
+      ? this.getEmailHref(primaryEmail)
       : undefined
   }
 
@@ -119,5 +128,9 @@ export class ContactPageComponent implements OnInit, OnDestroy {
     return address
       ? GOOGLE_MAPS_URL_PATTERN + address
       : undefined
+  }
+
+  getAddressHref(address: VCardType3AddressModel): string {
+    return GOOGLE_MAPS_URL_PATTERN + address.formattedAddress
   }
 }

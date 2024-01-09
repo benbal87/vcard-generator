@@ -1,0 +1,142 @@
+@import "globals";
+
+@mixin card-content-width() {
+  width: 50vw;
+  margin: 0 auto 0 auto;
+}
+
+div.page-container {
+  background-color: green;
+  min-height: 100vh;
+
+  div.vcard-container {
+    background-color: red;
+
+    div.vcard-header-wrapper {
+      background-color: $header-bg-color;
+      padding-top: 5rem;
+
+      div.vcard-header {
+        border: 1px solid $header-border-color;
+        @include card-content-width;
+
+        div.name-wrapper {
+          display: flex;
+          flex-flow: column;
+          align-items: center;
+          justify-content: center;
+          padding: 5rem 2rem 2rem 2rem;
+
+          & > *:not(:last-child) {
+            margin-bottom: 1rem;
+          }
+
+          span.name {
+            font-size: 1.25rem;
+            color: $header-txt-color;
+          }
+
+          span.title {
+            font-size: 1rem;
+            font-style: italic;
+            color: $header-txt-color-dimmed;
+          }
+        }
+
+        div.buttons-container {
+          border: 1px solid $header-border-color;
+          @include flex-center-row;
+
+          div.btn-wrapper {
+            padding: 1rem 2rem;
+
+            &:not(:last-child) {
+              border-right: 1px solid $header-border-color;
+
+              &:only-child {
+                border: none;
+              }
+            }
+
+            a {
+              @include flex-center-col;
+              color: $header-txt-color;
+              text-decoration: inherit;
+
+              span {
+                margin-top: 0.5rem;
+                text-transform: uppercase;
+              }
+            }
+
+            &:hover {
+              background: radial-gradient(circle, black 0%, lighten($header-bg-color, 10%) 0%, $header-bg-color 80%);
+            }
+          }
+        }
+      }
+    }
+
+    div.vcard-body-wrapper {
+      background-color: $body-bg-color;
+      padding-bottom: 5rem;
+
+      div.vcard-body {
+        @include card-content-width;
+        $border: 1px solid $body-border-color;
+        border-top: none;
+        border-right: $border;
+        border-bottom: $border;
+        border-left: $border;
+        padding-top: 2rem;
+
+        div.vcard-property-list-wrapper {
+          display: flex;
+          flex-flow: row;
+          align-items: flex-start;
+          padding: 1rem 2rem;
+
+          div.vcard-property-list {
+            margin-left: 2rem;
+            border-bottom: $border;
+            width: 100%;
+            padding-bottom: 1rem;
+
+            a.vcard-property {
+              display: block;
+              text-decoration: inherit;
+
+              &:not(:last-child) {
+                padding-bottom: 1rem;
+              }
+
+              span.vcard-property-value {
+                display: block;
+                max-width: 80%;
+                color: $body-txt-color;
+                margin-bottom: 0.25rem;
+                font-size: 1rem;
+
+                span {
+                  display: block;
+                }
+              }
+
+              span.vcard-property-title {
+                color: $body-txt-color-dimmed;
+              }
+            }
+          }
+
+          &:last-child {
+            div.vcard-property-list {
+              border-bottom: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+}
