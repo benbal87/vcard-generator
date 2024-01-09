@@ -246,9 +246,20 @@
   </div>
 
 } @else {
-  <!--  TODO: Loading component-->
+  @if (isError) {
+    <div class="error-wrapper">
+      <div>
+        <svg-general
+          [type]="SvgTypes.ERROR"
+          [size]="5"
+          [title]="SvgTypes.ERROR"
+          [style]="{ fill: 'red' }"
+        />
+        <span>Unknown Error occurred.</span>
+        <span>Please try again later.</span>
+      </div>
+    </div>
+  } @else {
+    <loader [isFullScreen]="true"></loader>
+  }
 }
-
-<!--TODO: handle case when there is no data or error happened!-->
-<!--TODO: Also when the photo can not be found on the given path!-->
-<!--TODO: Also handle when there are unrecognized keys in the vcard data json.-->

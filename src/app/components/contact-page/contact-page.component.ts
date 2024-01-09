@@ -10,6 +10,7 @@ import {
 } from '../../services/json-contact-reader.service'
 import { isArrayNotEmpty } from '../../utils/array.util'
 import { isStringNotEmpty } from '../../utils/string.util'
+import { LoaderComponent } from '../loader/loader.component'
 import { SvgGeneralComponent } from '../svg/svg-general/svg-general.component'
 import {
   GOOGLE_MAPS_URL_PATTERN,
@@ -21,7 +22,8 @@ import {
   selector: 'app-contact-page',
   standalone: true,
   imports: [
-    SvgGeneralComponent
+    SvgGeneralComponent,
+    LoaderComponent
   ],
   templateUrl: './contact-page.component.html',
   styleUrl: './contact-page.component.scss'
@@ -31,6 +33,7 @@ export class ContactPageComponent implements OnInit, OnDestroy {
   protected readonly SvgTypes = SvgTypes
   paramsSubscription!: Subscription
   jsonContactReaderServiceSubscription!: Subscription
+  isError: boolean = false
 
   contactId: string | undefined
 
@@ -71,13 +74,16 @@ export class ContactPageComponent implements OnInit, OnDestroy {
         this.jsonContactReaderService.getContactData(contactDataJsonUrl)
           .subscribe({
             next: (vCardModel: VCardType3Model): void => {
-              this.contactDataVCardModel = vCardModel
+              setTimeout(() => {
+                this.contactDataVCardModel = vCardModel
+              }, 3000)
             },
             error: error => {
               console.error(
                 'An error occurred while trying to parse contact data',
                 error
               )
+              this.isError = true
             }
           })
     } else {

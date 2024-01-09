@@ -176,7 +176,10 @@ export class JsonContactReaderService {
             this.photoBase64Subject$.next('')
           }
         }),
-        catchError(e => throwError(() => e))
+        catchError(e => {
+          this.photoBase64Subject$.next('')
+          return throwError(() => e)
+        })
       )
   }
 }

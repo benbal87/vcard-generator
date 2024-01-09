@@ -3,6 +3,7 @@ import { Component, Input, OnChanges } from '@angular/core'
 import SvgTypes from '../../../enums/svg-types.enum'
 import { isStringNotEmpty } from '../../../utils/string.util'
 import { SvgCallComponent } from '../svg-call/svg-call.component'
+import { SvgErrorComponent } from '../svg-error/svg-error.component'
 import { SvgInternetComponent } from '../svg-internet/svg-internet.component'
 import { SvgLocationComponent } from '../svg-location/svg-location.component'
 import { SvgMailComponent } from '../svg-mail/svg-mail.component'
@@ -26,7 +27,8 @@ import { SvgWorkComponent } from '../svg-work/svg-work.component'
     SvgLocationComponent,
     SvgWorkComponent,
     SvgPersonAddComponent,
-    SvgSaveComponent
+    SvgSaveComponent,
+    SvgErrorComponent
   ],
   styleUrls: ['./svg-general.component.scss']
 })

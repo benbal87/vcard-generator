@@ -6,7 +6,8 @@ enum SvgTypes {
   LOCATION = 'LOCATION',
   WORK = 'WORK',
   PERSON_ADD = 'PERSON_ADD',
-  SAVE = 'SAVE'
+  SAVE = 'SAVE',
+  ERROR = 'ERROR'
 }
 
 export default SvgTypes

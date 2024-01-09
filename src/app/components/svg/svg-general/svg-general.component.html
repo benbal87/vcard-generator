@@ -23,6 +23,9 @@
   @case (SvgTypes.SAVE) {
     <svg-save [style]="style" [class]="class" [title]="title" />
   }
+  @case (SvgTypes.ERROR) {
+    <svg-error [style]="style" [class]="class" [title]="title" />
+  }
   @default {
     <svg-call [style]="style" [class]="class" [title]="title" />
   }
